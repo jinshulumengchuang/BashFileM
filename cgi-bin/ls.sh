@@ -1,31 +1,26 @@
 #!/bin/bash
-echo 'Content-type:text/html'
-echo ''
-cat <<EOF
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="../mdui/css/mdui.min.css"></link>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
-</head>
-<body>
-EOF
 path=`python3 decoder.py "$QUERY_STRING"`
+test "$1" && path="$1"
+test "$2" || echo 'Content-type:text/html'
+echo ''
 dir=`find "$path"  -maxdepth 1  -type d`
 file=`find "$path"  -maxdepth 1  -type f,l`
 cat <<EOF
-<table class="mdui-table">
-<thead><tr><th>Path</th><th>Select</th></tr></thead><tbody>
+  <div id="progress" style="display: none;" class="mdui-progress">
+    <div class="mdui-progress-indeterminate"></div>
+  </div>
+  <table class="mdui-table">
+    <thead><tr><th>Filename</th><th><a onclick="myselectall()">Select</a></th></tr></thead><tbody>
 EOF
 i=0
 echo "$dir" | while read filename
 do
+filename2=`echo "$filename"|tr '/' '\n'| tail -n1`
 test $filename || break
 test $i  -eq 0 || cat <<EOF
    <tr>
-   <td onclick="enter('$filename')"> $filename </td> <td><label class="mdui-checkbox">
-   <input type="checkbox"   onclick="myselectdir('$filename')" id="$filename" >
+   <td><a href="index.sh?$filename">$filename2 </a></td> <td><label class="mdui-checkbox">
+   <input type="checkbox"   onclick="myselect('$filename')" id="$filename" >
    </input>
    <i  class="mdui-checkbox-icon">
    </i>
@@ -38,24 +33,33 @@ done
 i=0
 echo "$file" | while read filename
 do
+filename2=`echo "$filename"|tr '/' '\n'| tail -n1`
 test $i  -eq 0 || cat <<EOF
    <tr>
-   <td onclick="xopen('$filename')"> $filename </td> <td><label class="mdui-checkbox">
-   <input type="checkbox"   onclick="myselectfile('$filename')" id="$filename" >
+   <td><a href="javascript:xopen('$filename')" onclick=""> $filename2 </a></td> <td><label class="mdui-checkbox">
+   <input type="checkbox"   onclick="myselect('$filename')" id="$filename" >
    </input>
    <i  class="mdui-checkbox-icon">
    </i>
    </label>
    </td>
    </tr>
+
 EOF
 i=$(( $i + 1 ))
 done
 cat <<EOF
 </table>
-
-
-<script src="../mdui/js/mdui.min.js"></script>
-</body>
-</html>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+<script>
+document.getElementById('path').value = '$path'
+</script>
 EOF
+

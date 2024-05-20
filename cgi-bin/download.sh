@@ -1,5 +1,6 @@
 #!/bin/bash
 path=`python3 decoder.py "$QUERY_STRING"`
-echo 'Content-Type: application/octet-stream'
+minetype=`xdg-mime query filetype $path`
+echo 'Content-Type:' "$minetype"
 echo ''
 test "$path" && cat "$path"

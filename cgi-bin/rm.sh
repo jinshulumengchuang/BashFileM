@@ -1,3 +1,7 @@
 #!/bin/bash
-path=`python3 decoder.py "$QUERY_STRING"`
-test "$path" && rm -r "$path"
+cat /tmp/bashfilem-selectlist | while read filename
+do
+  test "$filename" && rm -r "$filename"
+done
+echo 'Content-type:text/html'
+
