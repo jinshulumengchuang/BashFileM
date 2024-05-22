@@ -1,6 +1,10 @@
 selectvar = []
 document.getElementById('newtab').href = window.location.href
-document.getElementById('method').innerHTML =  window.localStorage.getItem('method')
+method = window.localStorage.getItem('method')
+if(method == null) {
+  window.localStorage.setItem('method', local)
+}
+document.getElementById('method').innerHTML =  method
 Array.prototype.removeByValue = function (val) {
   for (var i = 0; i < this.length; i++) {
     if (this[i] === val) {
@@ -140,7 +144,7 @@ function myselectall() {
     }
 }
 async function myupload() {
-  await localStorage.clear()
+  await localStorage.removeItem('path')
   await localStorage.setItem('path', document.getElementById('path').value)
   document.getElementById('upload').click()
 }
