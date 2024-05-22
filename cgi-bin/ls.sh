@@ -1,5 +1,6 @@
 #!/bin/bash
 path=`python3 decoder.py "$QUERY_STRING"`
+path="/mnt/NAS/软件/网络"
 test "$1" && path="$1"
 test "$2" || echo 'Content-type:text/html'
 echo ''
@@ -16,8 +17,9 @@ i=0
 echo "$dir" | while read filename
 do
 filename2=`echo "$filename"|tr '/' '\n'| tail -n1`
-test $filename || break
-test $i  -eq 0 || cat <<EOF
+test "$filename" || break
+#test $i  -eq 0 ||
+cat <<EOF
    <tr>
    <td><a href="index.sh?$filename">$filename2 </a></td> <td><label class="mdui-checkbox">
    <input type="checkbox"   onclick="myselect('$filename')" id="$filename" >
@@ -34,7 +36,9 @@ i=0
 echo "$file" | while read filename
 do
 filename2=`echo "$filename"|tr '/' '\n'| tail -n1`
-test $i  -eq 0 || cat <<EOF
+test "$filename" || break
+#test $i  -eq 0 ||
+cat <<EOF
    <tr>
    <td><a href="javascript:xopen('$filename')" onclick=""> $filename2 </a></td> <td><label class="mdui-checkbox">
    <input type="checkbox"   onclick="myselect('$filename')" id="$filename" >
