@@ -45,6 +45,9 @@ function myrequest(url) {
   if (xhr.readyState === 4){
       if (xhr.status === 200){
          myreload()
+      } else {
+        mybar("failed")
+        myreload()
       }
     }
   }
