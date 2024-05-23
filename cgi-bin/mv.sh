@@ -4,5 +4,6 @@ cat /tmp/bashfilem-selectlist | while read filename
 do
   mv  "$filename" "$path"
 done
+rm /tmp/bashfilem-selectlist
 echo 'Content-type:text/html'
 

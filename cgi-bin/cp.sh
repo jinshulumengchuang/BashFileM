@@ -4,5 +4,6 @@ cat /tmp/bashfilem-selectlist | while read filename
 do
   cp -fa "$filename" "$path"
 done
+rm /tmp/bashfilem-selectlist
 echo 'Content-type:text/html'
 
