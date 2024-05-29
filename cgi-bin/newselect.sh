@@ -1,2 +1,4 @@
 #!/bin/bash
-rm /tmp/bashfilem-selectlist && echo 'Content-type:text/html'
+rm '/tmp/bashfilem-selectlist'
+echo 'Content-type:text/html'
+echo ''

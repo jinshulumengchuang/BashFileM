@@ -108,23 +108,31 @@ function xopen(path) {
       a.click()
   }
 }
+/*async function mypushselect() {
+  await mypushselect2()
+  selectvar = []
+  console.log(selectvar)
+}*/
 function mypushselect() {
   mybar('Selected.Now you can remove your files or copy/move files to another tab.')
   i = 0
   var xhr= new XMLHttpRequest()
-  xhr.open('GET', "newselect.sh?", true)
+  xhr.open('GET', "newselect.sh", true)
   xhr.send();
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = async function() {
   if (xhr.readyState === 4){
       if (xhr.status === 200){
-         while(selectvar[i]) {
-         myrequest("addselect.sh?" + selectvar[i])
-         i++
-         }
+         await mypushselectmain()
+         selectvar = []
       }
     }
   }
 }
+function mypushselectmain() {
+  while(selectvar[i]) {
+           myrequest("addselect.sh?" + selectvar[i])
+           i++
+         }}
 function cp() {
   document.getElementById('progress').style.display = 'block'
   path = document.getElementById('path').value
